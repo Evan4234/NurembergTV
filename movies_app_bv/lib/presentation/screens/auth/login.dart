@@ -1,9 +1,9 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:movies_app_bv/data/auth/auth_remote_data_source_impl.dart';
 import 'package:movies_app_bv/data/auth/auth_repository_impl.dart';
 import 'package:movies_app_bv/presentation/screens/auth/register.dart';
-import 'package:movies_app_bv/presentation/widgets/button.dart';
+import 'package:movies_app_bv/presentation/widgets/button_widget.dart';
 
 class LoginScreen extends StatefulWidget {
   static const name = 'login-screen';
@@ -39,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Bienvenido ${response.email}')),
+        SnackBar(content: Text('Bienvenido \${response.email}')),
       );
       context.goNamed('home-screen');
     } catch (error) {
@@ -103,8 +103,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 },
               ),
               const SizedBox(height: 24),
-              PrimaryButton(
-                label: 'Ingresar',
+              CustomButton(
+                text: 'Ingresar',
                 isLoading: _isLoading,
                 onPressed: _submit,
               ),

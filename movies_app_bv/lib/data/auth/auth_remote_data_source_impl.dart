@@ -1,8 +1,8 @@
-﻿import 'dart:convert';
+import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:movies_app_bv/domain/auth/datasources/auth_remote_data_source.dart';
-import 'package:movies_app_bv/domain/auth/entities/auth_response.dart';
+import 'package:movies_app_bv/domain/datasources/auth_remote_data_source.dart';
+import 'package:movies_app_bv/domain/entities/auth_response.dart';
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   AuthRemoteDataSourceImpl({http.Client? client}) : _client = client ?? http.Client();

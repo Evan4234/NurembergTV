@@ -1,130 +1,94 @@
-﻿import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:movies_app_bv/data/auth/auth_remote_data_source_impl.dart';
-import 'package:movies_app_bv/data/auth/auth_repository_impl.dart';
-import 'package:movies_app_bv/presentation/widgets/button.dart';
+import 'package:flutter/material.dart';
 
-class RegisterScreen extends StatefulWidget {
+import '../../widgets/text_field_widget.dart';
+import '../../widgets/button_widget.dart';
+
+class RegisterScreen extends StatelessWidget {
   static const name = 'register-screen';
 
   const RegisterScreen({super.key});
 
   @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
-}
-
-class _RegisterScreenState extends State<RegisterScreen> {
-  final _formKey = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _authRepository = AuthRepositoryImpl(
-    remoteDataSource: AuthRemoteDataSourceImpl(),
-  );
-
-  bool _isLoading = false;
-
-  Future<void> _submit() async {
-    if (!_formKey.currentState!.validate()) return;
-
-    setState(() {
-      _isLoading = true;
-    });
-
-    try {
-      final response = await _authRepository.register(
-        name: _nameController.text.trim(),
-        email: _emailController.text.trim(),
-        password: _passwordController.text.trim(),
-      );
-
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Usuario creado: ${response.email}')),
-      );
-      context.goNamed('home-screen');
-    } catch (error) {
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(error.toString())),
-      );
-    } finally {
-      if (!mounted) return;
-      setState(() {
-        _isLoading = false;
-      });
-    }
-  }
-
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Registro')),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
+      backgroundColor: const Color(0xFF1E2128),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: const Row(
+          children: [
+            Icon(Icons.diamond, color: Colors.white, size: 20),
+            SizedBox(width: 8),
+            Text(
+              'Nuremberg TV',
+              style: TextStyle(color: Colors.white, fontSize: 16),
+            ),
+          ],
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TextFormField(
-                controller: _nameController,
-                decoration: const InputDecoration(labelText: 'Nombre'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Ingresa tu nombre';
-                  }
-                  return null;
-                },
+              const Text(
+                'Crear cuenta',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-              const SizedBox(height: 16),
-              TextFormField(
-                controller: _emailController,
-                keyboardType: TextInputType.emailAddress,
-                decoration: const InputDecoration(labelText: 'Correo electrónico'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Ingresa un correo electrónico';
-                  }
-                  if (!value.contains('@')) {
-                    return 'Ingresa un correo válido';
-                  }
-                  return null;
-                },
+              const SizedBox(height: 32),
+
+              const CustomTextField(
+                label: 'Nombre',
+                hintText: 'Tu nombre',
               ),
-              const SizedBox(height: 16),
-              TextFormField(
-                controller: _passwordController,
-                obscureText: true,
-                decoration: const InputDecoration(labelText: 'Contraseña'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Ingresa una contraseña';
-                  }
-                  if (value.length < 6) {
-                    return 'La contraseña debe tener al menos 6 caracteres';
-                  }
-                  return null;
-                },
+              const SizedBox(height: 20),
+
+              const CustomTextField(
+                label: 'Apellido',
+                hintText: 'Tu apellido',
               ),
-              const SizedBox(height: 24),
-              PrimaryButton(
-                label: 'Registrar',
-                isLoading: _isLoading,
-                onPressed: _submit,
+              const SizedBox(height: 20),
+
+              const CustomTextField(
+                label: 'Correo electrónico',
+                hintText: 'Correo electrónico',
               ),
-              const SizedBox(height: 16),
-              TextButton(
-                onPressed: () => context.pop(),
-                child: const Text('Ya tengo una cuenta'),
+              const SizedBox(height: 20),
+
+              const CustomTextField(
+                label: 'Contraseña',
+                hintText: 'Contraseña',
+                isPassword: true,
+              ),
+              const SizedBox(height: 20),
+
+              const CustomTextField(
+                label: 'Confirmar contraseña',
+                hintText: 'Confirmar contraseña',
+                isPassword: true,
+              ),
+
+              const SizedBox(height: 12),
+              const Text(
+                'Usa 8 o más caracteres con una mezcla de letras, números y símbolos',
+                style: TextStyle(color: Colors.white54, fontSize: 12),
+              ),
+
+              const SizedBox(height: 32),
+
+              SizedBox(
+                width: double.infinity,
+                child: CustomButton(
+                  text: 'Continuar',
+                  onPressed: () {
+                    // Lógica para registrar
+                  },
+                ),
               ),
             ],
           ),

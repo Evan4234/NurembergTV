@@ -1,6 +1,6 @@
-﻿import 'package:movies_app_bv/domain/auth/datasources/auth_remote_data_source.dart';
-import 'package:movies_app_bv/domain/auth/entities/auth_response.dart';
-import 'package:movies_app_bv/domain/auth/repositories/auth_repository.dart';
+import 'package:movies_app_bv/domain/datasources/auth_remote_data_source.dart';
+import 'package:movies_app_bv/domain/entities/auth_response.dart';
+import 'package:movies_app_bv/domain/repositories/auth_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl({required this.remoteDataSource});

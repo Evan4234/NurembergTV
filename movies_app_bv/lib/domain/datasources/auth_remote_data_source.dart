@@ -1,4 +1,4 @@
-﻿import '../entities/auth_response.dart';
+import 'package:movies_app_bv/domain/entities/auth_response.dart';
 
 abstract class AuthRemoteDataSource {
   Future<AuthResponse> login({
